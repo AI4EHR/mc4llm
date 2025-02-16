@@ -36,65 +36,18 @@ class RangeRule(ClassificationRule):
                 return category
         return self.default_category
 
-class MultiParameterRule(ClassificationRule):
-    """Rule for classifying based on multiple parameters."""
-    def __init__(self, classification_func: Callable[..., str], parameter_names: List[str], name: Optional[str] = None):
-        super().__init__(name)
-        self.classify = classification_func
-        self.parameter_names = parameter_names
-
-    def categorize(self, value: Any, **parameters) -> str:
-        """
-        Categorize based on multiple parameters.
-        
-        Args:
-            value: The primary value (if applicable)
-            **parameters: Additional parameters needed for classification
-            
-        Returns:
-            str: The classification result
-        """
-        return self.classify(**parameters)
-
-class CorrectionRule(BaseRule):
-    """Rule for correcting measurements based on other parameters."""
-    def __init__(self, correction_factors: Dict[str, Callable[[float, ...], float]], name: Optional[str] = None):
-        super().__init__(name)
-        self.correction_factors = correction_factors
-
-    def calculate(self, value: float, correction_type: str, **parameters) -> float:
-        """
-        Apply corrections to laboratory or clinical values.
-        
-        Args:
-            value: The value to correct
-            correction_type: Type of correction to apply
-            **parameters: Additional parameters needed for correction
-            
-        Returns:
-            float: The corrected value
-            
-        Raises:
-            ValueError: If correction_type is not found
-        """
-        if correction_type not in self.correction_factors:
-            raise ValueError(f"Unknown correction type: {correction_type}")
-        return self.correction_factors[correction_type](value, **parameters)
-
 class Guideline(ABC):
     """Base class for all guidelines that use rules for classification or calculation."""
     
-    def __init__(self, rules: Union[BaseRule, List[BaseRule]], default_rule: Optional[str] = None):
+    def __init__(self, rules: Union[BaseRule, List[BaseRule]]):
         """
         Initialize the guideline with one or more rules.
         
         Args:
             rules: Single rule or list of rules
-            default_rule: Name of the default rule to use if multiple rules are provided
         """
         self.rules = [rules] if isinstance(rules, BaseRule) else rules
         self._validate_rules()
-        self.default_rule = default_rule or (self.rules[0].name if self.rules else None)
     
     def _validate_rules(self):
         """Validate that all rules have unique names."""
@@ -102,12 +55,12 @@ class Guideline(ABC):
         if len(names) != len(set(names)):
             raise ValueError("All rules must have unique names")
     
-    def get_rule(self, name: Optional[str] = None) -> BaseRule:
+    def get_rule(self, name: str) -> BaseRule:
         """
         Get a specific rule by name.
         
         Args:
-            name: Name of the rule to retrieve. If None, returns the default rule.
+            name: Name of the rule to retrieve
             
         Returns:
             BaseRule: The requested rule
@@ -115,25 +68,10 @@ class Guideline(ABC):
         Raises:
             ValueError: If the rule name doesn't exist
         """
-        rule_name = name or self.default_rule
         for rule in self.rules:
-            if rule.name == rule_name:
+            if rule.name == name:
                 return rule
-        raise ValueError(f"Rule '{rule_name}' not found")
-    
-    def categorize(self, value: float, rule_name: Optional[str] = None) -> str:
-        """
-        Categorize a value using a specific rule or the default rule.
-        
-        Args:
-            value: The numeric value to categorize
-            rule_name: Name of the rule to use for categorization. If None, uses default rule.
-            
-        Returns:
-            str: The category the value falls into
-        """
-        rule = self.get_rule(rule_name)
-        return rule.categorize(value)
+        raise ValueError(f"Rule '{name}' not found")
     
     def get_available_rules(self) -> List[str]:
         """Get names of all available rules."""

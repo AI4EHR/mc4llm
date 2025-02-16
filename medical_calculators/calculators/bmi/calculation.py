@@ -1,14 +1,14 @@
 # calculators/bmi/calculation.py
 from medical_calculators.calculators.bmi.models import BMIInput, BMIOutput
 from medical_calculators.calculators.bmi.formulae import BMIFormula, StandardBMIFormula
-from medical_calculators.calculators.bmi.guidelines import DEFAULT_BMI_GUIDELINE
+from medical_calculators.calculators.bmi.guidelines import WHO_BMI_GUIDELINE, ASIAN_BMI_GUIDELINE
 from medical_calculators.utils.base_models import ureg
 from medical_calculators.config import DEFAULT_UNITS
-from typing import Optional
+from typing import Optional, Union
 
 def calculate_bmi(
     data: BMIInput,
-    guideline_type: Optional[str] = None,
+    guideline: Union[str, None] = "who",
     formula: BMIFormula = StandardBMIFormula(),
     output_unit: str = DEFAULT_UNITS["bmi"]
 ) -> BMIOutput:
@@ -26,7 +26,12 @@ def calculate_bmi(
     else:
         bmi_converted = bmi_value
 
-    # Categorize using the guideline
-    category = DEFAULT_BMI_GUIDELINE.categorize(bmi_value, guideline_type)
+    # Categorize using the appropriate guideline and rule
+    if guideline == "asian":
+        category = ASIAN_BMI_GUIDELINE.get_rule("bmi").categorize(bmi_value)
+    elif guideline == "who" or guideline is None:
+        category = WHO_BMI_GUIDELINE.get_rule("bmi").categorize(bmi_value)
+    else:
+        raise ValueError(f"Unknown guideline type: {guideline}. Use 'who' or 'asian'.")
     
     return BMIOutput(bmi=bmi_converted, category=category)
