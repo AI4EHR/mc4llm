@@ -5,28 +5,17 @@ from medical_calculators.utils.base_guideline import (
     RangeRule
 )
 
-class BMIGuideline(Guideline):
-    """BMI classification guideline."""
-    
-    def __init__(self, thresholds: Dict[str, Tuple[float, float]], description: str):
-        bmi_rule = RangeRule(
-            thresholds=thresholds,
-            name="bmi"
-        )
-        super().__init__([bmi_rule])
-        self._description = description
-    
-    def get_description(self) -> str:
-        return self._description
-
-# Create instances for global use
-WHO_BMI_GUIDELINE = BMIGuideline(
-    thresholds={
-        "Underweight": (0, 18.5),
-        "Normal weight": (18.5, 25),
-        "Overweight": (25, 30),
-        "Obese": (30, float("inf")),
-    },
+# Create WHO BMI guideline instance
+WHO_BMI_GUIDELINE = Guideline(
+    rules=RangeRule(
+        thresholds={
+            "Underweight": (0, 18.5),
+            "Normal weight": (18.5, 25),
+            "Overweight": (25, 30),
+            "Obese": (30, float("inf")),
+        },
+        name="bmi"
+    ),
     description=(
         "WHO BMI Guideline:\n"
         "Standard BMI classification for general population\n"
@@ -35,13 +24,17 @@ WHO_BMI_GUIDELINE = BMIGuideline(
     )
 )
 
-ASIAN_BMI_GUIDELINE = BMIGuideline(
-    thresholds={
-        "Underweight": (0, 18.5),
-        "Normal weight": (18.5, 23),
-        "Overweight": (23, 27.5),
-        "Obese": (27.5, float("inf")),
-    },
+# Create Asian BMI guideline instance
+ASIAN_BMI_GUIDELINE = Guideline(
+    rules=RangeRule(
+        thresholds={
+            "Underweight": (0, 18.5),
+            "Normal weight": (18.5, 23),
+            "Overweight": (23, 27.5),
+            "Obese": (27.5, float("inf")),
+        },
+        name="bmi"
+    ),
     description=(
         "Asian BMI Guideline:\n"
         "BMI classification with adjusted thresholds for Asian populations\n"

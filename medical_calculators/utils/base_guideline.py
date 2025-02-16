@@ -39,14 +39,16 @@ class RangeRule(ClassificationRule):
 class Guideline(ABC):
     """Base class for all guidelines that use rules for classification or calculation."""
     
-    def __init__(self, rules: Union[BaseRule, List[BaseRule]]):
+    def __init__(self, rules: Union[BaseRule, List[BaseRule]], description: str):
         """
         Initialize the guideline with one or more rules.
         
         Args:
             rules: Single rule or list of rules
+            description: A description of what this guideline represents and how it should be used
         """
         self.rules = [rules] if isinstance(rules, BaseRule) else rules
+        self._description = description
         self._validate_rules()
     
     def _validate_rules(self):
@@ -77,7 +79,6 @@ class Guideline(ABC):
         """Get names of all available rules."""
         return [rule.name for rule in self.rules]
     
-    @abstractmethod
     def get_description(self) -> str:
         """Get a description of the guideline and its rules."""
-        pass 
+        return self._description 
