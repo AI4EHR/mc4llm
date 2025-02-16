@@ -1,6 +1,11 @@
 # medical_calculators/calculators/bmi/guidelines.py
 from typing import Dict, Tuple
-from medical_calculators.utils.base_guideline import Guideline, RangeRule
+from medical_calculators.utils.base_guideline import (
+    Guideline, 
+    RangeRule,
+    MultiParameterRule,
+    CorrectionRule
+)
 
 class BMIGuideline(Guideline):
     """BMI classification guidelines following different standards."""
