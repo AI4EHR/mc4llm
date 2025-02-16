@@ -1,0 +1,7 @@
+Metadata-Version: 2.2
+Name: medical_calculators
+Version: 0.1.0
+Requires-Dist: pydantic>=1.8.2
+Requires-Dist: pint>=0.17
+Requires-Dist: pytest>=6.0.0
+Dynamic: requires-dist
