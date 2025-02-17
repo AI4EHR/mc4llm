@@ -1,6 +1,12 @@
 import pytest
 from medical_calculators.guideline import BaseGuideline
 from medical_calculators.rule import RangeRule
+from medical_calculators.formula.base import BaseFormula
+
+# Create test formula
+class TestFormula(BaseFormula):
+    def calculate(self, value: float) -> float:
+        return value * 2
 
 # Create test rules
 age_rule = RangeRule(
@@ -26,6 +32,7 @@ height_rule = RangeRule(
 # Create test guideline instance
 test_guideline = BaseGuideline(
     rules=[age_rule, height_rule],
+    formulas={"test": TestFormula()},
     description="A test guideline for testing core guideline functionality"
 )
 
@@ -45,6 +52,25 @@ def test_guideline_rule_management():
     # Test getting non-existent rule
     with pytest.raises(ValueError):
         test_guideline.get_rule("non_existent")
+
+def test_guideline_formula_management():
+    # Test getting available formulas
+    available_formulas = test_guideline.get_available_formulas()
+    assert "test" in available_formulas
+    assert len(available_formulas) == 1
+    
+    # Test getting formula by name
+    formula = test_guideline.get_formula("test")
+    assert isinstance(formula, TestFormula)
+    assert formula.calculate(value=5) == 10
+    
+    # Test getting non-existent formula
+    with pytest.raises(ValueError):
+        test_guideline.get_formula("non_existent")
+    
+    # Test case-insensitive formula lookup
+    formula = test_guideline.get_formula("TEST")
+    assert isinstance(formula, TestFormula)
 
 def test_guideline_rule_categorization():
     # Test age rule categorization
@@ -80,4 +106,16 @@ def test_guideline_duplicate_rule_names():
         BaseGuideline(
             rules=[duplicate_rule1, duplicate_rule2],
             description="Should fail due to duplicate rule names"
-        ) 
+        )
+
+def test_guideline_without_formula():
+    # Test creating guideline without formula
+    guideline = BaseGuideline(
+        rules=age_rule,
+        description="Guideline without formula"
+    )
+    assert len(guideline.get_available_formulas()) == 0
+    
+    # Test getting formula from guideline without formula
+    with pytest.raises(ValueError):
+        guideline.get_formula("standard") 

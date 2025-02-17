@@ -2,6 +2,7 @@
 from typing import Dict, Tuple
 from medical_calculators.guideline import BaseGuideline
 from medical_calculators.rule import RangeRule
+from medical_calculators.example_calculators.bmi.formula import StandardBMIFormula
 
 # Create WHO BMI guideline instance
 WHO_BMI_GUIDELINE = BaseGuideline(
@@ -14,6 +15,7 @@ WHO_BMI_GUIDELINE = BaseGuideline(
         },
         name="bmi"
     ),
+    formulas={"standard": StandardBMIFormula()},
     description=(
         "WHO BMI Guideline:\n"
         "Standard BMI classification for general population\n"
@@ -33,6 +35,7 @@ ASIAN_BMI_GUIDELINE = BaseGuideline(
         },
         name="bmi"
     ),
+    formulas={"standard": StandardBMIFormula()},
     description=(
         "Asian BMI Guideline:\n"
         "BMI classification with adjusted thresholds for Asian populations\n"
