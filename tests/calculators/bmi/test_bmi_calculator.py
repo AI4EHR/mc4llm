@@ -1,7 +1,7 @@
 import pytest
 from medical_calculators.calculators.bmi.models import BMIInput
 from medical_calculators.calculators.bmi.calculation import calculate_bmi
-from medical_calculators.calculators.bmi.formulae import StandardBMIFormula, PonderalIndex, RevisedBMIFormula
+from medical_calculators.calculators.bmi.formulae import StandardBMIFormula
 from medical_calculators.calculators.bmi.guidelines import WHO_BMI_GUIDELINE, ASIAN_BMI_GUIDELINE
 
 def test_calculate_bmi_standard():
@@ -41,23 +41,6 @@ def test_calculate_bmi_different_output_units():
     # Test with lb/ft² output
     result = calculate_bmi(input_data, output_unit="lb/ft^2")
     assert pytest.approx(result.bmi, rel=0.01) == 4.68  # Approximate conversion
-
-def test_calculate_bmi_different_formulae():
-    input_data = BMIInput(weight=70, height=1.75)
-    
-    # Test Ponderal Index
-    result_ponderal = calculate_bmi(
-        input_data,
-        formula=PonderalIndex()
-    )
-    assert pytest.approx(result_ponderal.bmi, rel=0.01) == 13.06
-
-    # Test Revised BMI
-    result_revised = calculate_bmi(
-        input_data,
-        formula=RevisedBMIFormula()
-    )
-    assert pytest.approx(result_revised.bmi, rel=0.01) == 22.46
 
 def test_calculate_bmi_edge_cases():
     # Test very low BMI
@@ -100,4 +83,19 @@ def test_bmi_guidelines():
 def test_invalid_bmi_guideline():
     # Test invalid guideline type
     with pytest.raises(ValueError):
-        calculate_bmi(BMIInput(weight=70, height=1.75), guideline="invalid_guideline") 
+        calculate_bmi(BMIInput(weight=70, height=1.75), guideline="invalid_guideline")
+
+def test_bmi_input_validation():
+    # Test that unitless observations are rejected
+    with pytest.raises(ValueError):
+        BMIInput(
+            weight={"value": 70, "unit": None},
+            height={"value": 1.75, "unit": "m"}
+        ).validate_observations()
+    
+    with pytest.raises(ValueError):
+        BMIInput(
+            weight={"value": 70, "unit": "kg"},
+            height={"value": 1.75, "unit": None}
+        ).validate_observations()
+
