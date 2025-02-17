@@ -1,42 +1,7 @@
-from abc import ABC, abstractmethod
-from typing import Dict, Tuple, Any, Optional, List, Union, Callable
+from typing import List, Union
+from medical_calculators.rule.base import BaseRule
 
-class BaseRule(ABC):
-    """Root class for all types of rules in the system."""
-    def __init__(self, name: Optional[str] = None):
-        self.name = name or "default"
-
-class ClassificationRule(BaseRule, ABC):
-    """Abstract base class for rules that classify values into categories."""
-    @abstractmethod
-    def categorize(self, value: Any, **kwargs) -> str:
-        """
-        Categorize a value based on the rule's logic.
-        
-        Args:
-            value: The primary value to categorize
-            **kwargs: Additional parameters that might be needed for classification
-            
-        Returns:
-            str: The category the value falls into
-        """
-        pass
-
-class RangeRule(ClassificationRule):
-    """Represents a rule that classifies a value into categories based on numeric ranges."""
-    def __init__(self, thresholds: Dict[str, Tuple[float, float]], default_category: str = "Unknown", name: Optional[str] = None):
-        super().__init__(name)
-        self.thresholds = thresholds
-        self.default_category = default_category
-
-    def categorize(self, value: float, **kwargs) -> str:
-        """Categorize a value based on the defined thresholds."""
-        for category, (min_val, max_val) in self.thresholds.items():
-            if min_val <= value < max_val:
-                return category
-        return self.default_category
-
-class Guideline(ABC):
+class BaseGuideline:
     """Base class for all guidelines that use rules for classification or calculation."""
     
     def __init__(self, rules: Union[BaseRule, List[BaseRule]], description: str):

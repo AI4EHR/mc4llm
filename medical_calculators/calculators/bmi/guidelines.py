@@ -1,12 +1,10 @@
 # medical_calculators/calculators/bmi/guidelines.py
 from typing import Dict, Tuple
-from medical_calculators.utils.base_guideline import (
-    Guideline, 
-    RangeRule
-)
+from medical_calculators.guideline import BaseGuideline
+from medical_calculators.rule import RangeRule
 
 # Create WHO BMI guideline instance
-WHO_BMI_GUIDELINE = Guideline(
+WHO_BMI_GUIDELINE = BaseGuideline(
     rules=RangeRule(
         thresholds={
             "Underweight": (0, 18.5),
@@ -25,7 +23,7 @@ WHO_BMI_GUIDELINE = Guideline(
 )
 
 # Create Asian BMI guideline instance
-ASIAN_BMI_GUIDELINE = Guideline(
+ASIAN_BMI_GUIDELINE = BaseGuideline(
     rules=RangeRule(
         thresholds={
             "Underweight": (0, 18.5),

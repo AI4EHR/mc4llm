@@ -1,5 +1,6 @@
 import pytest
-from medical_calculators.utils.base_guideline import Guideline, RangeRule
+from medical_calculators.guideline import BaseGuideline
+from medical_calculators.rule import RangeRule
 
 # Create test rules
 age_rule = RangeRule(
@@ -23,7 +24,7 @@ height_rule = RangeRule(
 )
 
 # Create test guideline instance
-test_guideline = Guideline(
+test_guideline = BaseGuideline(
     rules=[age_rule, height_rule],
     description="A test guideline for testing core guideline functionality"
 )
@@ -76,7 +77,7 @@ def test_guideline_duplicate_rule_names():
     )
     
     with pytest.raises(ValueError):
-        Guideline(
+        BaseGuideline(
             rules=[duplicate_rule1, duplicate_rule2],
             description="Should fail due to duplicate rule names"
         ) 
