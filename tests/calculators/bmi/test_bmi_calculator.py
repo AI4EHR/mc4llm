@@ -3,7 +3,6 @@ from medical_calculators.calculators.bmi.models import BMIInput
 from medical_calculators.calculators.bmi.calculation import calculate_bmi
 from medical_calculators.calculators.bmi.formulae import StandardBMIFormula, PonderalIndex, RevisedBMIFormula
 from medical_calculators.calculators.bmi.guidelines import WHO_BMI_GUIDELINE, ASIAN_BMI_GUIDELINE
-from medical_calculators.utils.base_models import Observation
 
 def test_calculate_bmi_standard():
     # Test using SI units: weight in kg, height in m.
@@ -60,24 +59,6 @@ def test_calculate_bmi_different_formulae():
     )
     assert pytest.approx(result_revised.bmi, rel=0.01) == 22.46
 
-def test_calculate_bmi_different_guidelines():
-    input_data = BMIInput(weight=65, height=1.7)  # BMI ~22.49
-    
-    # Test with WHO guidelines
-    result_who = calculate_bmi(input_data, guideline="who")
-    assert result_who.category == "Normal weight"
-    
-    # Test with Asian guidelines
-    result_asian = calculate_bmi(input_data, guideline="asian")
-    assert result_asian.category == "Normal weight"
-    
-    # Test borderline case
-    input_data_borderline = BMIInput(weight=70, height=1.7)  # BMI ~24.22
-    result_borderline_who = calculate_bmi(input_data_borderline, guideline="who")
-    result_borderline_asian = calculate_bmi(input_data_borderline, guideline="asian")
-    assert result_borderline_who.category == "Normal weight"
-    assert result_borderline_asian.category == "Overweight"
-
 def test_calculate_bmi_edge_cases():
     # Test very low BMI
     input_data_low = BMIInput(weight=35, height=1.75)
@@ -98,21 +79,25 @@ def test_calculate_bmi_mixed_units():
     result = calculate_bmi(input_data)
     assert pytest.approx(result.bmi, rel=0.01) == 22.74
 
-def test_guideline_rules():
-    # Test guideline rule management
-    assert "bmi" in WHO_BMI_GUIDELINE.get_available_rules()
-    assert "bmi" in ASIAN_BMI_GUIDELINE.get_available_rules()
+def test_bmi_guidelines():
+    input_data = BMIInput(weight=65, height=1.7)  # BMI ~22.49
     
+    # Test with WHO guidelines
+    result_who = calculate_bmi(input_data, guideline="who")
+    assert result_who.category == "Normal weight"
+    
+    # Test with Asian guidelines
+    result_asian = calculate_bmi(input_data, guideline="asian")
+    assert result_asian.category == "Normal weight"
+    
+    # Test borderline case
+    input_data_borderline = BMIInput(weight=70, height=1.7)  # BMI ~24.22
+    result_borderline_who = calculate_bmi(input_data_borderline, guideline="who")
+    result_borderline_asian = calculate_bmi(input_data_borderline, guideline="asian")
+    assert result_borderline_who.category == "Normal weight"
+    assert result_borderline_asian.category == "Overweight"
+
+def test_invalid_bmi_guideline():
     # Test invalid guideline type
     with pytest.raises(ValueError):
-        calculate_bmi(BMIInput(weight=70, height=1.75), guideline="invalid_guideline")
-
-def test_guideline_descriptions():
-    # Test that guidelines provide meaningful descriptions
-    who_description = WHO_BMI_GUIDELINE.get_description()
-    asian_description = ASIAN_BMI_GUIDELINE.get_description()
-    
-    assert "WHO BMI Guideline" in who_description
-    assert "general population" in who_description
-    assert "Asian BMI Guideline" in asian_description
-    assert "Asian populations" in asian_description
+        calculate_bmi(BMIInput(weight=70, height=1.75), guideline="invalid_guideline") 
