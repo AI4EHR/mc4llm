@@ -15,11 +15,11 @@ Kindly star us and check back soon for updates!
 - [x] Add support for creating Custom Guidelines
 - [x] Add support for creating Custom Calculators
 
-- [ ] Add support for Calculator Registory.
+- [ ] Add support for Calculator registry.
 - [ ] Add support for hosting a calculator registry.
 - [ ] Add support for parsing UCUM expressions.
 
-We would love to hear from you! We want to make it easy for implementors to enable their CDS modules to use LLM tools.
+We would love to hear from you! We want to make it easy for implementors to enable their CDS (Clinical Decision Support) modules to use LLM tools.
 
 Have any suggestions or improvements? Please let us know!
 Raise a Feature Request. 
