@@ -15,7 +15,7 @@ WHO_BMI_GUIDELINE = BaseGuideline(
         },
         name="bmi"
     ),
-    formulas={"standard": StandardBMIFormula()},
+    formulas=StandardBMIFormula(name="standard"),
     description=(
         "WHO BMI Guideline:\n"
         "Standard BMI classification for general population\n"
@@ -35,7 +35,7 @@ ASIAN_BMI_GUIDELINE = BaseGuideline(
         },
         name="bmi"
     ),
-    formulas={"standard": StandardBMIFormula()},
+    formulas=StandardBMIFormula(name="standard"),
     description=(
         "Asian BMI Guideline:\n"
         "BMI classification with adjusted thresholds for Asian populations\n"

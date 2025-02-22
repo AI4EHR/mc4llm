@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 class BaseFormula(ABC):
     """Base class for all calculation formulae in the system."""
+    def __init__(self, name: Optional[str] = None):
+        self.name = name or "default"
     
     @abstractmethod
     def calculate(self, **kwargs: Dict[str, Any]) -> float:

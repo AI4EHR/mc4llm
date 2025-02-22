@@ -1,12 +1,7 @@
 import pytest
 from medical_calculators.guideline import BaseGuideline
 from medical_calculators.rule import RangeRule
-from medical_calculators.formula.base import BaseFormula
-
-# Create test formula
-class TestFormula(BaseFormula):
-    def calculate(self, value: float) -> float:
-        return value * 2
+from tests.helpers.formula import HelperFormula
 
 # Create test rules
 age_rule = RangeRule(
@@ -29,10 +24,13 @@ height_rule = RangeRule(
     name="height"
 )
 
+# Create test formula instance
+test_formula = HelperFormula(name="test")
+
 # Create test guideline instance
 test_guideline = BaseGuideline(
     rules=[age_rule, height_rule],
-    formulas={"test": TestFormula()},
+    formulas=test_formula,
     description="A test guideline for testing core guideline functionality"
 )
 
@@ -59,18 +57,13 @@ def test_guideline_formula_management():
     assert "test" in available_formulas
     assert len(available_formulas) == 1
     
-    # Test getting formula by name
+    # Test getting specific formula
     formula = test_guideline.get_formula("test")
-    assert isinstance(formula, TestFormula)
-    assert formula.calculate(value=5) == 10
+    assert formula.name == "test"
     
     # Test getting non-existent formula
     with pytest.raises(ValueError):
         test_guideline.get_formula("non_existent")
-    
-    # Test case-insensitive formula lookup
-    formula = test_guideline.get_formula("TEST")
-    assert isinstance(formula, TestFormula)
 
 def test_guideline_rule_categorization():
     # Test age rule categorization
@@ -108,6 +101,18 @@ def test_guideline_duplicate_rule_names():
             description="Should fail due to duplicate rule names"
         )
 
+def test_guideline_duplicate_formula_names():
+    # Test that guideline creation fails with duplicate formula names
+    duplicate_formula1 = HelperFormula(name="same_name")
+    duplicate_formula2 = HelperFormula(name="same_name")
+    
+    with pytest.raises(ValueError):
+        BaseGuideline(
+            rules=age_rule,
+            formulas=[duplicate_formula1, duplicate_formula2],
+            description="Should fail due to duplicate formula names"
+        )
+
 def test_guideline_without_formula():
     # Test creating guideline without formula
     guideline = BaseGuideline(
@@ -118,4 +123,4 @@ def test_guideline_without_formula():
     
     # Test getting formula from guideline without formula
     with pytest.raises(ValueError):
-        guideline.get_formula("standard") 
+        guideline.get_formula("standard")

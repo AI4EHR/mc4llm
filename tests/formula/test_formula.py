@@ -1,29 +1,15 @@
 import pytest
 from medical_calculators.formula.base import BaseFormula
+from tests.helpers.formula import SimpleAdditionFormula, SimpleMultiplicationFormula
 
-class SimpleAdditionFormula(BaseFormula):
-    """A simple formula that adds two numbers for testing."""
-    def calculate(self, **kwargs) -> float:
-        if 'a' not in kwargs or 'b' not in kwargs:
-            raise ValueError("Both 'a' and 'b' parameters are required")
-        try:
-            a = float(kwargs['a'])
-            b = float(kwargs['b'])
-            return a + b
-        except (ValueError, TypeError):
-            raise TypeError("Parameters must be numeric or convertible to numeric")
-
-class SimpleMultiplicationFormula(BaseFormula):
-    """A simple formula that multiplies two numbers for testing."""
-    def calculate(self, **kwargs) -> float:
-        if 'x' not in kwargs or 'y' not in kwargs:
-            raise ValueError("Both 'x' and 'y' parameters are required")
-        try:
-            x = float(kwargs['x'])
-            y = float(kwargs['y'])
-            return x * y
-        except (ValueError, TypeError):
-            raise TypeError("Parameters must be numeric or convertible to numeric")
+def test_formula_name():
+    # Test default name
+    formula = SimpleAdditionFormula()
+    assert formula.name == "default"
+    
+    # Test custom name
+    named_formula = SimpleAdditionFormula(name="custom")
+    assert named_formula.name == "custom"
 
 def test_base_formula_interface():
     # Test that BaseFormula cannot be instantiated directly
@@ -38,22 +24,23 @@ def test_base_formula_interface():
         IncompleteFormula()
 
 def test_formula_calculation():
-    # Test basic calculation with SimpleAdditionFormula
-    add_formula = SimpleAdditionFormula()
-    result = add_formula.calculate(a=5, b=3)
-    assert result == 8.0
-    assert isinstance(result, float)
+    formula = SimpleAdditionFormula()
     
-    # Test with different number types
-    assert add_formula.calculate(a=5.5, b=3.2) == 8.7
-    assert add_formula.calculate(a=0, b=0) == 0.0
-    assert add_formula.calculate(a=-1, b=1) == 0.0
+    # Test valid calculation
+    assert formula.calculate(a=1, b=2) == 3
+    assert formula.calculate(a="1", b="2") == 3  # String inputs should work
     
-    # Test with a different formula implementation
-    mult_formula = SimpleMultiplicationFormula()
-    assert mult_formula.calculate(x=4, y=3) == 12.0
-    assert mult_formula.calculate(x=2.5, y=2) == 5.0
-    assert mult_formula.calculate(x=0, y=5) == 0.0
+    # Test missing parameters
+    with pytest.raises(ValueError):
+        formula.calculate(a=1)  # Missing b
+    with pytest.raises(ValueError):
+        formula.calculate(b=2)  # Missing a
+    
+    # Test invalid parameters
+    with pytest.raises(TypeError):
+        formula.calculate(a="invalid", b=2)
+    with pytest.raises(TypeError):
+        formula.calculate(a=1, b="invalid")
 
 def test_formula_parameter_validation():
     add_formula = SimpleAdditionFormula()
@@ -96,4 +83,4 @@ def test_formula_type_handling():
         add_formula.calculate(a="abc", b=3)
     
     with pytest.raises(TypeError):
-        add_formula.calculate(a=5, b="def") 
+        add_formula.calculate(a=5, b="def")
