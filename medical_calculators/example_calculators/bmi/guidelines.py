@@ -11,7 +11,7 @@ WHO_BMI_GUIDELINE = BaseGuideline(description=(
     "\nNote: BMI has limitations and may not be suitable for athletes, "
     "pregnant individuals, or those with unusual body compositions."
 ))
-WHO_BMI_GUIDELINE.add_rule(RangeRule(
+WHO_BMI_GUIDELINE.rules.add(RangeRule(
     thresholds={
         "Underweight": (0, 18.5),
         "Normal weight": (18.5, 25),
@@ -20,7 +20,7 @@ WHO_BMI_GUIDELINE.add_rule(RangeRule(
     },
     name="bmi"
 ))
-WHO_BMI_GUIDELINE.add_formula(StandardBMIFormula(name="standard"))
+WHO_BMI_GUIDELINE.formulas.add(StandardBMIFormula(name="standard"))
 
 # Create Asian BMI guideline instance
 ASIAN_BMI_GUIDELINE = BaseGuideline(description=(
@@ -29,7 +29,7 @@ ASIAN_BMI_GUIDELINE = BaseGuideline(description=(
     "\nNote: These thresholds reflect the increased health risks "
     "at lower BMI values in Asian populations."
 ))
-ASIAN_BMI_GUIDELINE.add_rule(RangeRule(
+ASIAN_BMI_GUIDELINE.rules.add(RangeRule(
     thresholds={
         "Underweight": (0, 18.5),
         "Normal weight": (18.5, 23),
@@ -38,4 +38,4 @@ ASIAN_BMI_GUIDELINE.add_rule(RangeRule(
     },
     name="bmi"
 ))
-ASIAN_BMI_GUIDELINE.add_formula(StandardBMIFormula(name="standard"))
+ASIAN_BMI_GUIDELINE.formulas.add(StandardBMIFormula(name="standard"))
