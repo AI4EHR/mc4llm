@@ -1,6 +1,6 @@
 import pytest
-from medical_calculators.example_calculators.bmi.models import BMIInput
-from medical_calculators.example_calculators.bmi.calculation import who_calculator, asian_calculator
+from mc4llm.example_calculators.bmi.models import BMIInput
+from mc4llm.example_calculators.bmi.calculation import who_calculator, asian_calculator
 
 def test_calculate_bmi_standard():
     # Test using SI units: weight in kg, height in m.

@@ -1,8 +1,8 @@
 # calculators/bmi/calculation.py
-from medical_calculators.calculator import Calculator
-from medical_calculators.example_calculators.bmi.models import BMIInput, BMIOutput
-from medical_calculators.example_calculators.bmi.guidelines import WHO_BMI_GUIDELINE, ASIAN_BMI_GUIDELINE
-from medical_calculators.observation.base import ureg
+from mc4llm.calculator import Calculator
+from mc4llm.example_calculators.bmi.models import BMIInput, BMIOutput
+from mc4llm.example_calculators.bmi.guidelines import WHO_BMI_GUIDELINE, ASIAN_BMI_GUIDELINE
+from mc4llm.observation.base import ureg
 
 class BMICalculator(Calculator[BMIInput, BMIOutput]):
     """BMI calculator implementation."""

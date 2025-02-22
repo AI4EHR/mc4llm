@@ -55,3 +55,9 @@ venv.bak/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal 
+
+#Reference documentation
+pint-docs.txt   
+
+#Eggs
+*.egg-info

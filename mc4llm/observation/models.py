@@ -2,7 +2,7 @@ from typing import Union, Optional, Dict, Any, List
 from pydantic import BaseModel
 from abc import ABC, abstractmethod
 
-from medical_calculators.observation.base import BaseObservation
+from mc4llm.observation.base import BaseObservation
 
 class BaseInputModel(BaseModel, ABC):
     """Abstract base class for all calculator input models."""

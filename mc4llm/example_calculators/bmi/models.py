@@ -2,9 +2,9 @@
 from typing import List, Optional
 from pydantic import Field, field_validator
 
-from medical_calculators.observation import BaseInputModel, BaseOutputModel, BaseObservation
-from medical_calculators.observation.base import ureg
-from medical_calculators.config import DEFAULT_UNITS
+from mc4llm.observation import BaseInputModel, BaseOutputModel, BaseObservation
+from mc4llm.observation.base import ureg
+from mc4llm.config import DEFAULT_UNITS
 
 class BMIInput(BaseInputModel):
     weight: BaseObservation = Field(

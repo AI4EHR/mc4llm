@@ -1,7 +1,7 @@
 import pytest
 from typing import List, Sequence
-from medical_calculators.guideline import BaseGuideline
-from medical_calculators.rule import RangeRule
+from mc4llm.guideline import BaseGuideline
+from mc4llm.rule import RangeRule
 from tests.helpers.formula import HelperFormula
 
 # Create test rules

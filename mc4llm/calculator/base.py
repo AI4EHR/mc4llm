@@ -1,8 +1,8 @@
 from typing import Generic, TypeVar
 from abc import ABC, abstractmethod
 
-from medical_calculators.observation import BaseInputModel, BaseOutputModel
-from medical_calculators.guideline import BaseGuideline
+from mc4llm.observation import BaseInputModel, BaseOutputModel
+from mc4llm.guideline import BaseGuideline
 
 InputT = TypeVar('InputT', bound=BaseInputModel)
 OutputT = TypeVar('OutputT', bound=BaseOutputModel)

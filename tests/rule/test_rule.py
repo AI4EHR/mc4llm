@@ -1,6 +1,6 @@
 import pytest
-from medical_calculators.rule.base import BaseRule, BaseClassificationRule
-from medical_calculators.rule.range import RangeRule
+from mc4llm.rule.base import BaseRule, BaseClassificationRule
+from mc4llm.rule.range import RangeRule
 
 def test_base_rule_creation():
     # Test basic rule creation

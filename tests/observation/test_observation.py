@@ -1,5 +1,5 @@
 import pytest
-from medical_calculators.observation.base import BaseObservation, TimeSeriesObservation
+from mc4llm.observation.base import BaseObservation, TimeSeriesObservation
 from pint import UnitRegistry
 
 def test_base_observation_creation():

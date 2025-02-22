@@ -1,5 +1,5 @@
 import pytest
-from medical_calculators.formula.base import BaseFormula
+from mc4llm.formula.base import BaseFormula
 from tests.helpers.formula import SimpleAdditionFormula, SimpleMultiplicationFormula
 
 def test_formula_name():

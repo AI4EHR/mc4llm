@@ -1,4 +1,4 @@
-from medical_calculators.formula import BaseFormula
+from mc4llm.formula import BaseFormula
 
 class StandardBMIFormula(BaseFormula):
     """Standard BMI formula: weight (kg) / height (m)^2"""

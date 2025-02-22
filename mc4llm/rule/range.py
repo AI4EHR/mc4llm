@@ -1,5 +1,5 @@
 from typing import Dict, Tuple, Optional
-from medical_calculators.rule.base import BaseClassificationRule
+from mc4llm.rule.base import BaseClassificationRule
 
 class RangeRule(BaseClassificationRule):
     """Represents a rule that classifies a value into categories based on numeric ranges."""

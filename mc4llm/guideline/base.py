@@ -1,7 +1,7 @@
 from typing import List, Union, Dict, Optional, Sequence, overload, Iterator
 from collections.abc import MutableSequence
-from medical_calculators.rule.base import BaseRule
-from medical_calculators.formula.base import BaseFormula
+from mc4llm.rule.base import BaseRule
+from mc4llm.formula.base import BaseFormula
 
 class RuleCollection(MutableSequence[BaseRule]):
     """Collection class for managing rules in a guideline."""

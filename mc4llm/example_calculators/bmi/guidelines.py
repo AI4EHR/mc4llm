@@ -1,8 +1,8 @@
 # medical_calculators/calculators/bmi/guidelines.py
 from typing import Dict, Tuple
-from medical_calculators.guideline import BaseGuideline
-from medical_calculators.rule import RangeRule
-from medical_calculators.example_calculators.bmi.formula import StandardBMIFormula
+from mc4llm.guideline import BaseGuideline
+from mc4llm.rule import RangeRule
+from mc4llm.example_calculators.bmi.formula import StandardBMIFormula
 
 # Create WHO BMI guideline instance
 WHO_BMI_GUIDELINE = BaseGuideline(description=(

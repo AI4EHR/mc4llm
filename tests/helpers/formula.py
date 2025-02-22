@@ -1,5 +1,5 @@
 """Formula test helper classes."""
-from medical_calculators.formula.base import BaseFormula
+from mc4llm.formula.base import BaseFormula
 
 class HelperFormula(BaseFormula):
     """A simple formula that multiplies a value by 2 for testing."""
