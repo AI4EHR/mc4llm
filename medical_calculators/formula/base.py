@@ -1,21 +1,30 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, TypeVar, Generic
 
-class BaseFormula(ABC):
-    """Base class for all calculation formulae in the system."""
+# Define generic type variables for input and output
+InputType = TypeVar('InputType')
+OutputType = TypeVar('OutputType')
+
+class BaseFormula(Generic[InputType, OutputType], ABC):
+    """Base class for all calculation formulae in the system.
+    
+    Type Parameters:
+        InputType: The type of input parameters the formula accepts
+        OutputType: The type of output the formula produces
+    """
     def __init__(self, name: Optional[str] = None):
         self.name = name or "default"
     
     @abstractmethod
-    def calculate(self, **kwargs: Dict[str, Any]) -> float:
+    def calculate(self, params: InputType) -> OutputType:
         """
         Calculate a value based on the formula's logic.
         
         Args:
-            **kwargs: Input parameters required for the calculation
+            params: Input parameters required for the calculation
             
         Returns:
-            float: The calculated value
+            The calculated value of type OutputType
             
         Raises:
             ValueError: If required parameters are missing or invalid
