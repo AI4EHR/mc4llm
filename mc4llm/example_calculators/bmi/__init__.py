@@ -3,12 +3,12 @@
 Provides functionality for calculating Body Mass Index (BMI).
 """
 
-from mc4llm.example_calculators.bmi.models import BMIInput, BMIOutput
-from mc4llm.example_calculators.bmi.calculation import who_calculator, asian_calculator
+from mc4llm.example_calculators.bmi.calculator import BMIInput, BMIOutput, WHO_BMI_CALCULATOR, ASIAN_BMI_CALCULATOR
+
 
 __all__ = [
-    "who_calculator",
-    "asian_calculator",
+    "WHO_BMI_CALCULATOR",
+    "ASIAN_BMI_CALCULATOR",
     "BMIInput",
     "BMIOutput"
 ]
