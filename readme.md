@@ -1,6 +1,7 @@
-# MC4LLM: A SDK for creating Medical Calculators. [Alpha Version]
+# MC4LLM: A SDK for creating Medical Calculators. 
+## [Alpha Version] (For internal use only)
 
-The repository is currently a work in progress ! (For internal use only)
+The repository is currently a work in progress ! 
 
 ## First Class support for LLM Tool Calling
 The goal is to make a SDK that allows you to create Medical Calculators as tools for LLMs. 

@@ -1,4 +1,4 @@
-# calculators/bmi/models.py
+# This is an old implementation, remove this. 
 from typing import List, Optional, Dict, Tuple
 from pydantic import Field, field_validator
 
@@ -9,7 +9,6 @@ from mc4llm.guideline import BaseGuideline
 from mc4llm.rule import RangeRule
 from mc4llm.formula import BaseFormula
 from mc4llm.calculator import Calculator
-
 
 # Define the input and output models for the calculator
 
