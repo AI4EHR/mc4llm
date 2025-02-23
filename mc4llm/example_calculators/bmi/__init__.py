@@ -3,7 +3,7 @@
 Provides functionality for calculating Body Mass Index (BMI).
 """
 
-from mc4llm.example_calculators.bmi.calculator_pydantic import BMIInput, BMIOutput,SIMPLE_WHO_BMI_CALCULATOR
+from mc4llm.example_calculators.bmi.simple_bmi import BMIInput, BMIOutput,SIMPLE_WHO_BMI_CALCULATOR
 
 
 __all__ = [

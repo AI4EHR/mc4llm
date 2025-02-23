@@ -1,10 +1,11 @@
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, validator, ConfigDict
 from pint import UnitRegistry, Quantity
 
 ureg = UnitRegistry()
 
 # Define your custom base class.
 class IOModel(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
     """
     Base class for all medical calculator IO models.
     In the future, common functionality or configuration can be added here.

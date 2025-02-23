@@ -1,5 +1,5 @@
 import pytest
-from mc4llm.example_calculators.bmi.calculator_pydantic import BMIInput, SIMPLE_WHO_BMI_CALCULATOR
+from mc4llm.example_calculators.bmi.simple_bmi import BMIInput, SIMPLE_WHO_BMI_CALCULATOR
 
 def test_bmi_calculator_standard():
     input_data = BMIInput(weight=70, height=1.75)
