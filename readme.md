@@ -19,11 +19,13 @@ Kindly star us and check back soon for updates!
 - [ ] Add support for Calculator registry.
 - [ ] Add support for hosting a calculator registry.
 - [ ] Add support for parsing UCUM expressions.
+- [ ] Add support for strict json schema similar to OpenAI 
 
 We would love to hear from you! We want to make it easy for implementors to enable their CDS (Clinical Decision Support) modules to use LLM tools.
 
 Have any suggestions or improvements? Please let us know!
 Raise a Feature Request. 
+<br>
 Contact us at [contact@ai4ehr.com](mailto:contact@ai4ehr.com)
 
 
