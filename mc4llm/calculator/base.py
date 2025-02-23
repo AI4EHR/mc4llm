@@ -1,11 +1,11 @@
 from typing import Generic, TypeVar
 from abc import ABC, abstractmethod
 
-from mc4llm.observation import BaseInputModel, BaseOutputModel
+from mc4llm.models import IOModel
 from mc4llm.guideline import BaseGuideline
 
-InputT = TypeVar('InputT', bound=BaseInputModel)
-OutputT = TypeVar('OutputT', bound=BaseOutputModel)
+InputT = TypeVar('InputT', bound=IOModel)
+OutputT = TypeVar('OutputT', bound=IOModel)
 
 class Calculator(Generic[InputT, OutputT], ABC):
     """Base class for all medical calculators."""
